@@ -29,14 +29,14 @@ We use hbase in the Standalone mode.
 
 3.Compile the data2hbase.cpp and run it to write data to database.
 
-*g++ -DHAVE_NETINET_IN_H -o Data2HbaseClient -I/usr/local/thrift/include/thrift -I./gen-cpp -L/usr/local/thrift/lib data2hbase.cpp ./gen-cpp/hbase_types.cpp ./gen-cpp/hbase_constants.cpp ./gen-cpp/THBaseService.cpp -lthrift -g
+* g++ -DHAVE_NETINET_IN_H -o Data2HbaseClient -I/usr/local/thrift/include/thrift -I./gen-cpp -L/usr/local/thrift/lib data2hbase.cpp ./gen-cpp/hbase_types.cpp ./gen-cpp/hbase_constants.cpp ./gen-cpp/THBaseService.cpp -lthrift -g
 
-*./Data2HbaseClient 0.0.0.0 9090
+* ./Data2HbaseClient 0.0.0.0 9090
 
 4.Compile the watermark.cpp and excute the watermarking algorithm.
 
-*g++ -DHAVE_NETINET_IN_H -o WatermarkClient -I/usr/local/thrift/include/thrift -I./gen-cpp -L/usr/local/thrift/lib watermark.cpp SHA1.cpp ./gen-cpp/hbase_types.cpp ./gen-cpp/hbase_constants.cpp ./gen-cpp/THBaseService.cpp -lthrift -g
+* g++ -DHAVE_NETINET_IN_H -o WatermarkClient -I/usr/local/thrift/include/thrift -I./gen-cpp -L/usr/local/thrift/lib watermark.cpp SHA1.cpp ./gen-cpp/hbase_types.cpp ./gen-cpp/hbase_constants.cpp ./gen-cpp/THBaseService.cpp -lthrift -g
 
-*./WatermarkClient 0.0.0.0 9090
+* ./WatermarkClient 0.0.0.0 9090
 
 
