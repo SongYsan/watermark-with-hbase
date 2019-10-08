@@ -3,19 +3,19 @@ Using hbase as an example to apply database watermarking algorithm to big data
 
 ## Compiler Environment
 
-* Operating System:Centos7
+* Operating System : Centos7
 
-* Hadoop:2.6.0
+* Hadoop : 2.6.0
 
-* boost:1.47.0
+* boost : 1.47.0
 
-* libevent:2.0.12-stable
+* libevent : 2.0.12-stable
 
-* Hbase:0.98.8
+* Hbase : 0.98.8
 
-* Thrift:0.7.0
+* Thrift : 0.7.0
 
-* jdk:1.8.0_221
+* jdk : 1.8.0_221
 
 ## Note
 
