@@ -17,7 +17,7 @@ Thrift:0.7.0
 
 jdk:1.8.0_221
 
-## note
+## Note
 
 We use hbase in the Standalone mode.
 
