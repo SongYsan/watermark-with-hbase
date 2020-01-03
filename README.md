@@ -54,7 +54,7 @@ We use hbase in the Standalone mode.
 
 If there is any warning, try 
 
-> ./Data2HbaseClient 0.0.0.0 9090
+> source /etc/profile
 
 4. Compile the watermark.cpp and excute the watermarking algorithm.
 
