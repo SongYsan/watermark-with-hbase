@@ -25,9 +25,13 @@ We use hbase in the Standalone mode.
 
 1. You should start related server.
 > start-dfs.sh
+
 > start-yarn.sh
+
 > ./start-hbase.sh
+
 > ./hbase-daemon.sh start thrift
+
 > jps
 ```
 4130 ResourceManager
