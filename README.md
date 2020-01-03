@@ -1,6 +1,3 @@
-**还没解决的问题：
-数据库预处理，需要在录入数据时按照主键排序 或者 在hbase中根据rowkey对行进行排序，暂时没有办法。**
-
 # watermark_with_hbase
 Using hbase as an example to apply database watermarking algorithm to big data
 
@@ -27,6 +24,21 @@ We use hbase in the Standalone mode.
 ## How to run it
 
 1. You should start related server.
+> start-dfs.sh
+> start-yarn.sh
+> ./start-hbase.sh
+> ./hbase-daemon.sh start thrift
+> jps
+```
+4130 ResourceManager
+3957 SecondaryNameNode
+3639 NameNode
+4922 HMaster
+5309 Jps
+5230 ThriftServer
+4239 NodeManager
+```
+
 
 2. Create a table which include two columns in the hbase.
 
