@@ -23,14 +23,14 @@ using boost::shared_ptr;
 
 const double EPS = 1.0e-8;
 
-int mark[32561][2]; //水印标记，添加水印的位置标记为1 //The sigh of the watermark.Set it to 1 when watermark is embedded.
+int mark[32561][2]; //The sigh of the watermark.Set it to 1 when watermark is embedded.
 string HashString(string str);
-string Watermark = "suijis";//嵌入的水印 //The watermark that will be embedded.
-string BinaryWatermark;//水印的二进制表示 //Binary representation of watermark
-string Key;//随机密钥 //random key
-int mNG=0;//分组数目 //number of groups
-int l;//水印长度 //length of watermark
-string mem;//提取出来的水印信息 //Extracted watermarking information
+string Watermark = "suijis"; //The watermark that will be embedded.
+string BinaryWatermark; //Binary representation of watermark
+string Key; //random key
+int mNG=0; //number of groups
+int l; //length of watermark
+string mem; //Extracted watermarking information
 int low[2];
 int high[2];
 int varit[2];
@@ -72,7 +72,6 @@ string HashString(string str)
 #endif
 }
 
-/*字符串转为整数*/
 /*string to integer*/
 int str2int(string str)
 {
@@ -82,7 +81,6 @@ int str2int(string str)
 	return ret;
 }
 
-/*整型转为string*/
 /*integer to string*/
 string int2str(int x)
 {
@@ -98,7 +96,6 @@ string int2str(int x)
 	return ret;
 }
 
-/*字符串转为浮点数*/
 /*string to float*/
 float str2float(string str)
 {
@@ -111,13 +108,12 @@ float str2float(string str)
 	return ret;
 }
 
-/*浮点数转为int*/
 /*float to integer*/
 int float2int(float f)
 {
 	string a1;
 	char buf[22];
-	gcvt(f, 3, buf); //保留3个数字，这个可以根据数据库中的数值精度调整。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
+	gcvt(f, 3, buf);
 	a1 = buf;
 	int i = 0;
 	while (a1[i] != '.')i++;
@@ -128,7 +124,6 @@ int float2int(float f)
 	return ret;
 }
 
-/*浮点数转为string*/
 /*float to string*/
 string float2str(float x)
 {
@@ -136,7 +131,7 @@ string float2str(float x)
 	if (x == 0)
 		return string("0");
 	char buf[22];
-	gcvt(x, 5, buf); //保留5个数字，这个可以根据数据库中的数值精度调整。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。
+	gcvt(x, 5, buf); 
 	ret = buf;
 	//while (x)
 	//{
@@ -146,9 +141,6 @@ string float2str(float x)
 	return ret;
 }
 
-
-
-/*读取数据库一行数据,这里是两个整型数据，返回字符串类型数组*/
 /*Read a row of data from the database.Here are two integer data, and the function returns an vector of string types*/
 vector<string> readdb(int argc, char** argv,string row) {
 	vector<string> result;
@@ -188,7 +180,6 @@ vector<string> readdb(int argc, char** argv,string row) {
 	return result;
 }
 
-//写入一行数据
 /*Write a row of data to the database*/
 int writedb(int argc, char** argv, string row, vector<string>& result) {
 	//fprintf(stderr, "writedb start\n");
@@ -208,13 +199,13 @@ int writedb(int argc, char** argv, string row, vector<string>& result) {
 		//put data
 		put.__set_row(row);
 		TColumnValue tcv;
-		//插入第一列
+
 		//insert the first row of data
 		tcv.__set_family("info");
 		tcv.__set_qualifier("age");
 		tcv.__set_value(result[0]);
 		cvs.insert(cvs.end(), tcv);
-		//插入第二列
+
 		//insert the second row of data
 		tcv.__set_qualifier("hours-per-week");
 		tcv.__set_value(result[1]);
@@ -235,7 +226,6 @@ int writedb(int argc, char** argv, string row, vector<string>& result) {
 	return 0;
 }
 
-/*计算每一列的最大值和最小值，从而计算敏感度*/
 /*Calculate the maximum and minimum values for each column,thus we can calculate the sensitivity of each column.*/
 void MiniMax(int argc, char** argv)
 {
@@ -260,8 +250,6 @@ void MiniMax(int argc, char** argv)
 	varit[1] = high[1] - low[1];
 }
 
-
-/*进行分组,返回一个整数值,表示某行元组属于哪一个分组*/
 /*This is the grouping function,and the function returns an integer value to indicate which group a row tuple belongs to*/
 int DivideGroup(string row)
 {
@@ -295,7 +283,6 @@ double noisyCount(int sensitivity, double epsilon)
 	return s / epsilon * sign(uniform) * log(1 - 2.0 * fabs(uniform));
 }
 
-/*对每一行的元素单独嵌入水印*/
 /*Embed watermarks separately for the elements of each row*/
 bool EmbedWatermark(int argc, char** argv, string row)
 {
@@ -317,7 +304,7 @@ bool EmbedWatermark(int argc, char** argv, string row)
 			tp = tp + 1;
 		int tpp = tp;
 		int yz = x;
-		if (tpp - yz > 8)//超过失真范围，嵌入水印 //Beyond the range of distortion, we need to embed watermark.
+		if (tpp - yz > 8) //Beyond the range of distortion, we need to embed watermark.
 		{
 			mark[str2int(row) - 1][i] = 1;
 			if (bit == 1)
@@ -341,7 +328,7 @@ bool EmbedWatermark(int argc, char** argv, string row)
 		else if (yz - tpp > 8)
 		{
 			//cout << "the second situation" << endl;
-			mark[str2int(row) - 1][i] = 1;//记录位置 //record position
+			mark[str2int(row) - 1][i] = 1; //record position
 			if (bit == 1)
 			{
 				if ((tpp + 8) % 2 == 1)
@@ -371,12 +358,10 @@ bool EmbedWatermark(int argc, char** argv, string row)
 		}
 		result[i]=int2str(x);
 	}
-	//写入嵌入水印的结果
 	//Write the result after embedding watermark.
 	writedb(argc, argv, row, result);
 }
 
-/*提取水印，返回水印的二进制表示*/
 /*Extracting the watermark,and the function returns the binary representation of the watermark*/
 string ExtractWatermark(int argc, char** argv)
 {
@@ -414,10 +399,9 @@ string ExtractWatermark(int argc, char** argv)
 		b = (b0[k] >= b1[k]) ? '0' : '1';
 		mem = mem + b;
 	}
-	return mem;//返回提取到的水印信息 //the function returns the extracted binary watermark information
+	return mem; //the function returns the extracted binary watermark information
 }
 
-/*统计误码率*/
 /*Calculate the bit error rate*/
 double ExtractBer()
 {
@@ -434,7 +418,6 @@ double ExtractBer()
 int main(int argc, char** argv)
 {
 	cout<<"initialing......"<<endl;
-	//变量初始化
 	//Variable initialization
 	for (int i = 0; i < 32561; i++)
 		for (int j = 0; j < 2; j++)
@@ -445,7 +428,7 @@ int main(int argc, char** argv)
 	low[1] = 40;
 	high[0] = 39;
 	high[1] = 40;
-	//生成16位随机密钥
+
 	//Generating 16-bit random key
 	for (int i = 0; i < 16; i++)
 	{
@@ -456,8 +439,6 @@ int main(int argc, char** argv)
 	cout<<"Minimax......"<<endl;
 	MiniMax(argc,argv);
 
-	
-	//计算水印的二进制表示
 	//Calculate the binary representation of the watermark.
 	for (int i = 0; i < Watermark.size(); i++)
 	{
