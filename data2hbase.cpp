@@ -1,4 +1,3 @@
-/*将data.txt的数据写入hbase数据库*/
 /*Write data of "data.txt" to hbase database.*/
 #include <iostream>
 #include <stdio.h>
@@ -23,7 +22,6 @@ using namespace apache::hadoop::hbase::thrift2;
 
 using boost::shared_ptr;
 
-//写入一行数据
 /*Write a row of data to the database*/
 void writedb(int argc, char** argv, vector<string>& tempstr)
 {
@@ -70,7 +68,6 @@ void writedb(int argc, char** argv, vector<string>& tempstr)
 	fprintf(stderr, "writedb stop\n");
 }
 
-/*读取数据库文件并逐行写入*/
 /*Read "data.txt" and write them to database row by row.*/
 bool mReadDbFile(int argc, char** argv, string dbFile)
 {
