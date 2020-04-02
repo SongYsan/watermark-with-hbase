@@ -1,4 +1,3 @@
-# Paper:Database Watermarking Based on Local Differential Privacy
 Using hbase as an example to apply database watermarking algorithm to big data
 
 ## Compiler Environment
