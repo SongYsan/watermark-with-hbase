@@ -27,9 +27,9 @@ We use hbase in the Standalone mode.
 
 > start-yarn.sh
 
-> ./start-hbase.sh
+> /usr/local/hbase-0.98.8/bin/start-hbase.sh
 
-> ./hbase-daemon.sh start thrift2
+> /usr/local/hbase-0.98.8/bin/hbase-daemon.sh start thrift2
 
 > jps
 ```
@@ -43,9 +43,16 @@ We use hbase in the Standalone mode.
 ```
 
 
-2. Create a table which include two columns in the hbase.
+2. Create a table 'hbase_test' in the hbase.
+> /usr/local/hbase-0.98.8/bin/hbase shell
+> create 'hbase_test', 'info'
+> scan 'hbase_test'
+> exit
+
 
 3. Compile the data2hbase.cpp and run it to write data to database.
+
+> cd /home/hadoop
 
 * `g++ -DHAVE_NETINET_IN_H -o Data2HbaseClient -I/usr/local/thrift/include/thrift -I./gen-cpp -L/usr/local/thrift/lib data2hbase.cpp ./gen-cpp/hbase_types.cpp ./gen-cpp/hbase_constants.cpp ./gen-cpp/THBaseService.cpp -lthrift -g`
 
