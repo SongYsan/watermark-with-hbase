@@ -29,7 +29,7 @@ We use hbase in the Standalone mode.
 
 > ./start-hbase.sh
 
-> ./hbase-daemon.sh start thrift
+> ./hbase-daemon.sh start thrift2
 
 > jps
 ```
